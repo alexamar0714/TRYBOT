@@ -1,0 +1,50 @@
+setup_connection(self, email, password, class_code)
+
+Input:
+
+        Sets up a connection to piazza and the desired course
+
+        :type  email: str
+        :param email: The email used for connection
+
+        :type  password: str
+        :param password: The password used for connection
+
+        :type  class_code: str
+        :param class_code: The class' code, found at the end of its URL
+        Ex: https://piazza.com/class/(HERE IS THE CLASS CODE)
+
+Output:
+	Return False //Failed
+	Return True  //Successful
+
+update(self, start_cid=0, cid=None):
+
+Input:
+
+        Goes through the Piazza posts, and if cid is declared, goes through only the specified post
+
+        :type: cid: int
+        :param: cid: Post ID
+
+        :type: start_cid: int
+        :param: start_cid: Update all posts with ID higher than start_cid
+
+Output:
+	Return False //Failed
+	Array of tuples  //Successful
+
+answer(self, cid, content):
+
+Input:
+        Posts a followup on Piazza
+
+        :type: cid: int
+        :param: cid: post ID
+
+        :type: content: string
+        :param: content: content of the followup
+
+Output:
+	Return False //Failed
+	Return True  //Successful
