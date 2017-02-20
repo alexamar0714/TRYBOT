@@ -53,17 +53,17 @@ class itslearningAPI:
 	}
 
 	url = {
-		'main': 'https://hist.itslearning.com',
-		'course': 'https://hist.itslearning.com/main.aspx?CourseID=',
-		'folder': 'https://hist.itslearning.com/Folder/processfolder.aspx?FolderID=',
-		'file': 'https://hist.itslearning.com/File/fs_folderfile.aspx?FolderFileID=',
-		'tool': 'https://hist.itslearning.com/LearningToolElement/ViewLearningToolElement.aspx?LearningToolElementId=',
-		'note': 'https://hist.itslearning.com/note/View_Note.aspx?NoteID=',
-		'essay': 'https://hist.itslearning.com/essay/read_essay.aspx?EssayID=',
-		'essay_download': 'https://hist.itslearning.com/File/download.aspx?FileID=',
-		'download': 'https://hist.itslearning.com/file/download.aspx?FileVersionID=-1&FileID=',
-		'dashboard': 'https://hist.itslearning.com/DashboardMenu.aspx?LocationId=105&LocationType=Hierarchy',
-		'logout': 'https://hist.itslearning.com/elogin/logout.aspx'
+		'main': 'https://ntnu.itslearning.com',
+		'course': 'https://ntnu.itslearning.com/main.aspx?CourseID=',
+		'folder': 'https://ntnu.itslearning.com/Folder/processfolder.aspx?FolderID=',
+		'file': 'https://ntnu.itslearning.com/File/fs_folderfile.aspx?FolderFileID=',
+		'tool': 'https://ntnu.itslearning.com/LearningToolElement/ViewLearningToolElement.aspx?LearningToolElementId=',
+		'note': 'https://ntnu.itslearning.com/note/View_Note.aspx?NoteID=',
+		'essay': 'https://ntnu.itslearning.com/essay/read_essay.aspx?EssayID=',
+		'essay_download': 'https://ntnu.itslearning.com/File/download.aspx?FileID=',
+		'download': 'https://ntnu.itslearning.com/file/download.aspx?FileVersionID=-1&FileID=',
+		'dashboard': 'https://ntnu.itslearning.com/DashboardMenu.aspx?LocationId=105&LocationType=Hierarchy',
+		'logout': 'https://ntnu.itslearning.com/elogin/logout.aspx'
 	}
 
 	courses = []
@@ -102,7 +102,7 @@ class itslearningAPI:
 		br.addheaders = [('User-agent', self.cfg['user_agent'])]
 		self.br = br 
 
-		if self.checkLogin():
+		if self.checkLogin(): ####### useless
 			print ' * Logget inn'
 		else:
 			print ' * Ikke innlogget'
@@ -494,7 +494,7 @@ class itslearningAPI:
 	# retrieve essay/exercise download id, filename
 	# False if no file exists
 	# todo: return submission link
-	def getEssay(self, essay_id):
+	def getEssay(self, essay_id): ################useless
 		br = self.br
 	
 		response = br.open('%s%s' % (self.url['essay'], essay_id)).read()
@@ -556,7 +556,7 @@ class itslearningAPI:
 
 	# retrieve learning tool
 	# assuming link wrapped in an iframe
-	def getTool(self, tool_id):
+	def getTool(self, tool_id):#####################################????????????????????????
 		try:
 			br = self.br
 
@@ -680,7 +680,7 @@ class itslearningAPI:
 		return False
 
 
-	def printStatus(self, string, nonl=False, xtranl=False):
+	def printStatus(self, string, nonl=False, xtranl=False): ######################useless
 		if self.cfg['show_status'] or self.cfg['debug']:
 			if nonl: print string,
 			else: print string
@@ -696,7 +696,7 @@ class itslearningAPI:
 
 
 
-###################################################################
+################################################################### USELESS
 
 
 #
