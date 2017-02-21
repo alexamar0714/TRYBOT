@@ -149,3 +149,29 @@ class Mint:
             return result  # Returns the wanted row in the keyword table as a tuple
         finally:
             connection.close()  # Closes the connection to the database
+            
+    def get_highest_pri(self, soke_liste):
+                '''
+
+        Gets the piazzaIDs and sum of priority matching the words given in the array as input to the function 
+
+        :type soke_liste: str array 
+        :param soke_liste: eks ["sokeord1","sokeord2","sokeord3"]
+
+        :return: List of tuples matching the input with desc sumpri, ((sumpri1,piazzaid1),(sumpri2,piazzaid2)): ((7,5738),(5,3245),(3,6578))
+        '''
+        
+        connection = self.connect()
+        cursor = connection.cursor()
+        try:
+            soke_string = ""
+            for word in soke_liste:
+                soke_string+="word = '"+word+"' OR "
+            sokeString = soke_string[:-3]
+            print(soke_string)
+            sql = "SELECT information.piazzaid, CAST(SUM(priority) AS UNSIGNED) AS sumpri FROM keywords INNER JOIN information ON keywords.idinformation = information.idinformation WHERE "+soke_string+" GROUP BY information.idinformation ORDER BY sumpri DESC LIMIT 3"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            return result
+        finally:
+            connection.close()
