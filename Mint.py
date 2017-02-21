@@ -125,20 +125,20 @@ class Mint:
         finally:
             connection.close()  # Close the connection
 
-    def get_keywords_with_information(self, information_id=str):
+    def get_keywords_with_information(self, piazza_id=str):
         '''
 
         Gets all the rows in the keywords table with a specific information id
 
-        :type information_id: str
-        :param information_id: The information id of the wanted keywords
+        :type piazza_id: str
+        :param information_id: The piazza id of the wanted keywords
 
         :return: List of tuples
         '''
         connection = self.connect()  # Sets up a connection to the database
         cursor = connection.cursor()
         try:
-            sql = "SELECT keywords.* FROM keywords,information WHERE keywords.idinformation =" + information_id  # Query
+            sql = "SELECT keywords.* FROM keywords INNER JOIN information ON keywords.idinformation = information.idinformation WHERE piazzaid = " + piazza_id  # Query
             cursor.execute(sql)  # Executes the query
             result = cursor.fetchall()
             return result  # Returns a list of tuples with the wanted rows in the keyword table if successful
