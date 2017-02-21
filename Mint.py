@@ -90,36 +90,62 @@ class Mint:
             return result  # Returns the result as a list of tuples
         finally:
             connection.close()  # Closes the connection to the database
-     
+
     def get_all_information(self):
-        connection = self.connect()
+        '''
+
+        Gets all the rows of the information table
+
+        :return: List of tuples
+
+        '''
+
+        connection = self.connect()  # Sets up a connection to the database
         cursor = connection.cursor()
         try:
-            sql = "SELECT * FROM information"
-            cursor.execute(sql)
+            sql = "SELECT * FROM information"  # Query
+            cursor.execute(sql)  # Executes the quesry
             result = cursor.fetchall()
-            return result
+            return result  # Returns a list of tuples from the information table
         finally:
-            connection.close()
-            
-    def get_keywords_with_information(self, informationId=str):
-        connection = self.connect()
+            connection.close()  # Close the connection
+
+    def get_keywords_with_information(self, information_id=str):
+        '''
+
+        Gets all the rows in the keywords table with a specific information id
+
+        :type information_id: str
+        :param information_id: The information id of the wanted keywords
+
+        :return: List of tuples
+        '''
+        connection = self.connect()  # Sets up a connection to the database
         cursor = connection.cursor()
         try:
-            sql = "SELECT keywords.* FROM keywords,information WHERE keywords.idinformation ="+informationId
-            cursor.execute(sql)
+            sql = "SELECT keywords.* FROM keywords,information WHERE keywords.idinformation =" + information_id  # Query
+            cursor.execute(sql)  # Executes the query
             result = cursor.fetchall()
-            return result
+            return result  # Returns a list of tuples with the wanted rows in the keyword table
         finally:
-            connection.close()
-            
-    def get_keywords_with_id(self, indexId=str):
-        connection = self.connect()
+            connection.close()  # Closes the connection to the database
+
+    def get_keyword_with_id(self, index_id=str):
+        '''
+
+        Gets the row in the keyword table with specific id
+
+        :type index_id: str
+        :param index_id: The id of the wanted keyword
+
+        :return: Tuple
+        '''
+        connection = self.connect()    # Sets up a connection to the database
         cursor = connection.cursor()
         try:
-            sql = "SELECT keywords.* FROM keywords WHERE keywords.idkeywords ="+indexId
-            cursor.execute(sql)
+            sql = "SELECT keywords.* FROM keywords WHERE keywords.idkeywords =" + index_id  # Query
+            cursor.execute(sql)  # Executes the query
             result = cursor.fetchall()
-            return result
+            return result  # Returns the wanted row in the keyword table as a tuple
         finally:
-            connection.close()
+            connection.close()  # Closes the connection to the database
