@@ -1,0 +1,81 @@
+def connect(self, host=str, user=str, password=str, db=str)
+Input:
+
+        Connects to the desired database
+        :type host: str
+        :param host: Host name/IP-address
+        :type user: str
+        :param user: User used to connect to the database
+        :type password: str
+        :param password: Users password
+        :type db: str
+        :param db: The database to connect to
+
+Output:
+	Return False //Failed
+	Return Connection  //Successful
+
+def add_keyword(self, word=str, priority=str, idinformation=str)
+Input:
+        :type word: str
+        :param word: The keyword to add
+        :type priority: str
+        :param priority: The keyword's priority
+        :type idinformation: str
+        :param idinformation: The keyword's foreign key to the information table
+
+Output:
+	:None
+
+
+def add_information(self, idinformation=str, piazzaid=str)
+Input:
+
+        :type idinformation: str
+        :param idinformation: The information id number
+        :type piazzaid: str
+        :param piazzaid: The id of the post on Piazza
+Output:
+	:None
+
+
+def get_all_keywords(self)
+Input:
+None
+
+Output:
+List of tuples:
+((idKeyword1,word1,pri1,informationid1), (idKeyword2,word2,pri2,informationid2))
+
+
+def get_all_information(self)
+Input:
+None
+
+Output:
+List of tuples:
+((idinformation1,idpiazza1),(idinformation2,idpiazza2))
+
+
+def get_keywords_with_information(self, information_id=str)
+Input:
+The index of the piazza post wanted given as a STRING
+
+Output:
+All keywords matching this piazza post as tuples:
+((idKeyword1,word1,pri1,informationid1), (idKeyword2,word2,pri2,informationid2))
+
+def get_keyword_with_id(self, index_id=str)
+Input:
+Id of keyword as STRING
+Output:
+The keyword matching the id:
+(idKeyword1,word1,pri1,informationid1)
+
+def get_highest_pri(self, soke_liste)
+Input:
+List of words wanted to find best match on as a array of strings:
+["Word1","Word2"] 
+Output:
+List of the 3 tuples of the matching piazza id and the sum of the pri in DESC order:
+((piazzaid1,sumpri1),(piazzaid2,sumpri2),(piazzaid3,sumpri3))
