@@ -4,7 +4,8 @@ import pymysql
 
 class Mint:
 
-    def connect(self, host=str, user=str, password=str, db=str):
+    # connect-function connects ty the desired database
+    def connect(self, host='localhost', user='root', password='root', db='trybot'):
         '''
 
         Connects to the desired database
@@ -21,11 +22,16 @@ class Mint:
         :type db: str
         :param db: The database to connect to
 
-        :return: Returns the connection
+        :return: Connection
+
         '''
 
-        connection = pymysql.connect(host=host, user=user, password=password, db=db, charset='utf8')
-        return connection
+        try:
+            # The connection
+            connection = pymysql.connect(host=host, user=user, password=password, db=db, charset='utf8')
+            return connection  # Returns the connection if successful
+        except:
+            return False  # Returns False if connection failed
 
     def add_keyword(self, word=str, priority=str, idinformation=str):
         '''
@@ -45,9 +51,12 @@ class Mint:
         connection = self.connect()  # Sets up a connection to the database
         cursor = connection.cursor()
         try:
-            sql = "INSERT INTO keywords (word, priority, idinformation) VALUES (%s, %s, %s)"  # Query to be performed
+            sql = "INSERT INTO keywords (word, priority, idinformation) VALUES (%s, %s, %s)"  # Query
             cursor.execute(sql, (word, priority, idinformation))  # Executes the query
             connection.commit()  # Commits the execution
+            return True  # Returns True if adding successful
+        except:
+            return False  # Returns False if adding failed
         finally:
             connection.close()  # Closes the connection to the database
 
@@ -66,28 +75,33 @@ class Mint:
         connection = self.connect()  # Sets up a connection to the database
         cursor = connection.cursor()
         try:
-            sql = "INSERT INTO information (idinformation, piazzaid) VALUES (%s, %s)"  # The query to be executed
+            sql = "INSERT INTO information (idinformation, piazzaid) VALUES (%s, %s)"  # Query
             cursor.execute(sql, (idinformation, piazzaid))  # Executes the query
             connection.commit()  # Commits the execution
+            return True  # Returns True if adding successful
+        except:
+            return False  # Returns False if adding failed
         finally:
             connection.close()  # Closes the connection to the database
 
     def get_all_keywords(self):
         '''
 
-        Gets all the keywords with all their data
+        Gets all rows of the keywords table
 
-        :return: Returns a list of tuples with all keywords and their data
+        :return: list of tuples
 
         '''
 
         connection = self.connect()  # Sets up a connection
         cursor = connection.cursor()
         try:
-            sql = "SELECT * FROM keywords"  # The query to be executed
+            sql = "SELECT * FROM keywords"  # Query
             cursor.execute(sql)  # Executes the query
             result = cursor.fetchall()
-            return result  # Returns the result as a list of tuples
+            return result  # Returns the result as a list of tuples if successful
+        except:
+            return False  # Returns False if getting failed
         finally:
             connection.close()  # Closes the connection to the database
 
@@ -106,7 +120,9 @@ class Mint:
             sql = "SELECT * FROM information"  # Query
             cursor.execute(sql)  # Executes the quesry
             result = cursor.fetchall()
-            return result  # Returns a list of tuples from the information table
+            return result  # Returns a list of tuples from the information table if successful
+        except:
+            return False  # Returns False if getting failed
         finally:
             connection.close()  # Close the connection
 
@@ -126,7 +142,9 @@ class Mint:
             sql = "SELECT keywords.* FROM keywords,information WHERE keywords.idinformation =" + information_id  # Query
             cursor.execute(sql)  # Executes the query
             result = cursor.fetchall()
-            return result  # Returns a list of tuples with the wanted rows in the keyword table
+            return result  # Returns a list of tuples with the wanted rows in the keyword table if successful
+        except:
+            return False  # Returns False if getting failed
         finally:
             connection.close()  # Closes the connection to the database
 
@@ -146,7 +164,9 @@ class Mint:
             sql = "SELECT keywords.* FROM keywords WHERE keywords.idkeywords =" + index_id  # Query
             cursor.execute(sql)  # Executes the query
             result = cursor.fetchall()
-            return result  # Returns the wanted row in the keyword table as a tuple
+            return result  # Returns the wanted row in the keyword table as a tuple if successful
+        except:
+            return False  # Returns False if getting failed
         finally:
             connection.close()  # Closes the connection to the database
             
