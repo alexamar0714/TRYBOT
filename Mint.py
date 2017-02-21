@@ -167,7 +167,7 @@ class Mint:
             soke_string = "" #Makes an empty string to put in the sql statement 
             for word in soke_liste: #Builds the string to filter out words in the sql statement based on the input array
                 soke_string+="word = '"+word+"' OR "
-            sokeString = soke_string[:-3] #Removes the last OR
+            soke_string = soke_string[:-3] #Removes the last OR
             #Joins the two tables, sum the prioreties, groups by the informationid and filters out the words.
             sql = "SELECT information.piazzaid, CAST(SUM(priority) AS UNSIGNED) AS sumpri FROM keywords INNER JOIN information ON keywords.idinformation = information.idinformation WHERE "+soke_string+" GROUP BY information.idinformation ORDER BY sumpri DESC LIMIT 3"
             cursor.execute(sql)
