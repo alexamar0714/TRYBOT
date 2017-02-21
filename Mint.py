@@ -1,8 +1,8 @@
 import pymysql.cursors
 import pymysql
 
-class Mint():
 
+class Mint():
 
     def connect(self, host="localhost", user="root", password="root", db="trybot"):
         connection = pymysql.connect(host=host, user=user, password=password, db=db, charset='utf8')
