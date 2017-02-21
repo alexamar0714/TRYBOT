@@ -4,7 +4,7 @@ import pymysql
 
 class Mint:
 
-    def connect(self, host=str, user=str, password=str, db=str):
+    def connect(self, host='localhost', user='root', password='root', db='trybot'):
         '''
 
         Connects to the desired database
