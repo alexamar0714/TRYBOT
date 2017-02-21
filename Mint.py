@@ -191,6 +191,8 @@ class Mint:
             sql = "SELECT information.piazzaid, CAST(SUM(priority) AS UNSIGNED) AS sumpri FROM keywords INNER JOIN information ON keywords.idinformation = information.idinformation WHERE "+soke_string+" GROUP BY information.idinformation ORDER BY sumpri DESC LIMIT 3"
             cursor.execute(sql)
             result = cursor.fetchall()
-            return result
+            return result  # Returns result if successful
+        except:
+            return False  # Returns False if getting failed
         finally:
             connection.close()
