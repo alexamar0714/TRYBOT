@@ -49,3 +49,25 @@ class Mint():
             return result
         finally:
             connection.close()
+            
+    def get_keywords_with_information(self, informationId=str):
+        connection = self.connect()
+        cursor = connection.cursor()
+        try:
+            sql = "SELECT keywords.* FROM keywords,information WHERE keywords.idinformation ="+informationId
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            return result
+        finally:
+            connection.close()
+            
+    def get_keywords_with_id(self, indexId=str):
+        connection = self.connect()
+        cursor = connection.cursor()
+        try:
+            sql = "SELECT keywords.* FROM keywords WHERE keywords.idkeywords ="+indexId
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            return result
+        finally:
+            connection.close()
