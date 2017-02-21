@@ -131,7 +131,7 @@ class Mint:
         Gets all the rows in the keywords table with a specific information id
 
         :type piazza_id: str
-        :param information_id: The piazza id of the wanted keywords
+        :param piazza_id: The piazza id of the wanted keywords
 
         :return: List of tuples
         '''
