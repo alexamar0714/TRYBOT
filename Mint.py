@@ -32,7 +32,18 @@ class Mint():
         connection = self.connect()
         cursor = connection.cursor()
         try:
-            sql = "SELECT '*' FROM 'keywords'"
+            sql = "SELECT * FROM keywords"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            return result
+        finally:
+            connection.close()
+     
+    def get_all_information(self):
+        connection = self.connect()
+        cursor = connection.cursor()
+        try:
+            sql = "SELECT * FROM information"
             cursor.execute(sql)
             result = cursor.fetchall()
             return result
