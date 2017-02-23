@@ -10,7 +10,6 @@ Input:
         :param password: Users password
         :type db: str
         :param db: The database to connect to
-
 Output:
 	Return False //Failed
 	Return Connection  //Successful
@@ -45,7 +44,7 @@ None
 
 Output:
 List of tuples:
-((idKeyword1,word1,pri1,informationid1), (idKeyword2,word2,pri2,informationid2))
+((word1,pri1,informationid1), (word2,pri2,informationid2))
 
 
 def get_all_information(self)
