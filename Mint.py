@@ -113,7 +113,7 @@ class Mint:
         connection = self.connect()  # Sets up a connection to the database
         cursor = connection.cursor()
         try:
-            sql = "SELECT keywords.word, keywords.priority, ketwords.idinformation FROM keywords INNER JOIN information ON keywords.idinformation = information.idinformation WHERE piazzaid = " + piazza_id  # Query
+            sql = "SELECT keywords.word, keywords.priority, keywords.idinformation FROM keywords INNER JOIN information ON keywords.idinformation = information.idinformation WHERE piazzaid = " + piazza_id  # Query
             cursor.execute(sql)  # Executes the query
             result = cursor.fetchall()
             return result  # Returns a list of tuples with the wanted rows in the keyword table if successful
