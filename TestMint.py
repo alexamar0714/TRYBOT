@@ -13,7 +13,7 @@ class TestMint(unittest.TestCase):
     password = 'root'
     db = 'trybot'
     alle_keywords = (
-    ("hei", 5, 2), ("melk", 1, 2), ("ole", 1, 2), ("melk", 7, 3), ("ole", 1, 4), ("petter", 1, 3), ("kopmis", 20, 50),
+    ("hei", 5, 2), ("melk", 1, 2), ("ole", 1, 2), ("melk", 7, 3), ("ole", 1, 4), ("petter", 1, 3), ("kompis", 20, 50),
     ("melk", 1, 8))
 
     alle_information = ((2, 4923), (3, 9704), (4, 8923), (5, 5003), (6, 7483))
