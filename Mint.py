@@ -3,7 +3,6 @@ import pymysql
 
 
 class Mint:
-
     def connect(self, host='localhost', user='root', password='root', db='trybot'):
         '''
 
@@ -95,7 +94,7 @@ class Mint:
         connection = self.connect()  # Sets up a connection
         cursor = connection.cursor()
         try:
-            sql = "SELECT * FROM keywords"  # Query
+            sql = "SELECT word, priority, idinformation FROM keywords"  # Query
             cursor.execute(sql)  # Executes the query
             result = cursor.fetchall()
             return result  # Returns the result as a list of tuples if successful
@@ -157,7 +156,7 @@ class Mint:
 
         :return: Tuple
         '''
-        connection = self.connect()    # Sets up a connection to the database
+        connection = self.connect()  # Sets up a connection to the database
         cursor = connection.cursor()
         try:
             sql = "SELECT keywords.* FROM keywords WHERE keywords.idkeywords =" + index_id  # Query
@@ -168,27 +167,27 @@ class Mint:
             return False  # Returns False if getting failed
         finally:
             connection.close()  # Closes the connection to the database
-            
+
     def get_highest_pri(self, soke_liste):
-                '''
+        '''
 
-        Gets the piazzaIDs and sum of priority matching the words given in the array as input to the function 
+        Gets the piazzaIDs and sum of priority matching the words given in the array as input to the function
 
-        :type soke_liste: str array 
+        :type soke_liste: str array
         :param soke_liste: eks ["sokeord1","sokeord2","sokeord3"]
 
         :return: List of tuples matching the input with desc sumpri, ((sumpri1,piazzaid1),(sumpri2,piazzaid2)): ((7,5738),(5,3245),(3,6578))
         '''
-        
+
         connection = self.connect()
         cursor = connection.cursor()
         try:
-            soke_string = "" #Makes an empty string to put in the sql statement 
-            for word in soke_liste: #Builds the string to filter out words in the sql statement based on the input array
-                soke_string+="word = '"+word+"' OR "
-            soke_string = soke_string[:-3] #Removes the last OR
-            #Joins the two tables, sum the prioreties, groups by the informationid and filters out the words.
-            sql = "SELECT information.piazzaid, CAST(SUM(priority) AS UNSIGNED) AS sumpri FROM keywords INNER JOIN information ON keywords.idinformation = information.idinformation WHERE "+soke_string+" GROUP BY information.idinformation ORDER BY sumpri DESC LIMIT 3"
+            soke_string = ""  # Makes an empty string to put in the sql statement
+            for word in soke_liste:  # Builds the string to filter out words in the sql statement based on the input array
+                soke_string += "word = '" + word + "' OR "
+            soke_string = soke_string[:-3]  # Removes the last OR
+            # Joins the two tables, sum the prioreties, groups by the informationid and filters out the words.
+            sql = "SELECT information.piazzaid, CAST(SUM(priority) AS UNSIGNED) AS sumpri FROM keywords INNER JOIN information ON keywords.idinformation = information.idinformation WHERE " + soke_string + " GROUP BY information.idinformation ORDER BY sumpri DESC LIMIT 3"
             cursor.execute(sql)
             result = cursor.fetchall()
             return result  # Returns result if successful
