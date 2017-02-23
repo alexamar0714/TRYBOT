@@ -35,16 +35,16 @@ class TestMint(unittest.TestCase):
         mint.add_information("5", "5003")
         mint.add_information("6", "7483")
 
-    def connection_test(self):
+    def test_connection(self):
         mint = Mint()
         self.assertFalse(mint.connect('a', self.user, self.password, self.db))
         self.assertFalse(mint.connect(self.host, 'a', self.password, self.db))
         self.assertFalse(mint.connect(self.host, self.user, 'a', self.db))
         self.assertFalse(mint.connect(self.host, self.user, self.password, 'a'))
 
-    def input_output_test(self):
+    def test_input_output(self):
         mint = Mint()
-        self.assertFalse(self.alle_keywords[0], mint.get_keyword_with_id("1"))
+        self.assertFalse(self.alle_keywords[0], mint.get_keywords_with_id("1"))
         self.initValues()
         self.assertEqual(self.alle_keywords, mint.get_keyword_with_id("1"))
         self.assertEqual(self.alle_keywords, mint.get_all_keywords())
