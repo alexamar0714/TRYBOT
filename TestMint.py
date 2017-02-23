@@ -1,4 +1,4 @@
-self.'''
+'''
 This is the testing module for the MySQL Interface
 '''
 
@@ -18,20 +18,20 @@ class TestMint(unittest.TestCase):
 
     def initValues(self):
         mint = Mint()
-        mint.addKeyWord("hei","5","2")
-        mint.addKeyWord("melk","1","2")
-        mint.addKeyWord("ole","1","2")
-        mint.addKeyWord("melk","7","3")
-        mint.addKeyWord("ole","1","4")
-        mint.addKeyWord("petter","1","3")
-        mint.addKeyWord("kompis","20","5")
-        mint.addKeyWord("melk","1","8")
+        mint.add_keyword("hei","5","2")
+        mint.add_keyword("melk","1","2")
+        mint.add_keyword("ole","1","2")
+        mint.add_keyword("melk","7","3")
+        mint.add_keyword("ole","1","4")
+        mint.add_keyword("petter","1","3")
+        mint.add_keyword("kompis","20","5")
+        mint.add_keyword("melk","1","8")
 
-        mint.addInformation("2","4923")
-        mint.addInformation("3","9704")
-        mint.addInformation("4","8923")
-        mint.addInformation("5","5003")
-        mint.addInformation("6","7483")
+        mint.add_information("2","4923")
+        mint.add_information("3","9704")
+        mint.add_information("4","8923")
+        mint.add_information("5","5003")
+        mint.add_information("6","7483")
 
     def connection_test(self):
         mint = Mint()
