@@ -62,14 +62,14 @@ The index of the piazza post wanted given as a STRING
 
 Output:
 All keywords matching this piazza post as tuples:
-((idKeyword1,word1,pri1,informationid1), (idKeyword2,word2,pri2,informationid2))
+((word1,pri1,informationid1), (word2,pri2,informationid2))
 
 def get_keyword_with_id(self, index_id=str)
 Input:
 Id of keyword as STRING
 Output:
 The keyword matching the id:
-(idKeyword1,word1,pri1,informationid1)
+(word1,pri1,informationid1)
 
 def get_highest_pri(self, soke_liste)
 Input:
