@@ -1,0 +1,60 @@
+def establish_connection(self):
+
+        """
+        Establishes a connection to ItsLearning by logging through Feide.
+
+        :return: False if connection cannot be established.
+        :return: False if connection is successfully established.
+        """
+
+    def get_bulletins(self):
+
+        """
+        Fetches the written content of all bulletins.
+
+        :return: the text of all the bulletins.
+        :return: False if fetching cannot be achieved.
+        """
+
+       
+
+    def initiate_exploration_of_folders(self):
+
+        """
+        Initiates the exploration of folders.
+
+        :return: False if initiation fails.
+        :return: True if initiation succeeds.
+        """
+
+
+    def explore_folders(self, string):
+
+        """
+        Recursive function that explores folders using a top-down approach.
+
+        :param string: a single link contained in the present folder.
+        :return: False if exploration fails.
+        :return: True if exploration is successful.
+        """
+
+        
+
+    def get_pdf(self):
+
+        """
+        Opens the file and extracts the text (assuming the file is in pdf-format).
+
+        :return: False if extraction fails.
+        :return: True if extraction is successful.
+        """
+
+        
+    def get_data(self):
+        return self.data
+
+    def get_pdf_data(self):
+        return self.pdf_data
+
+    def get_explored_folders(self):
+        return self.explored_folders
