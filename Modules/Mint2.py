@@ -131,7 +131,7 @@ class Mint:
             sql2 = "SELECT piazzaid, COUNT(piazzaid) AS idcounts FROM keywords WHERE piazzaid IN " + piazzaids + " GROUP BY piazzaid ORDER BY idcounts DESC LIMIT 1"
             cursor.execute(sql2)
             result2 = cursor.fetchall()
-            return result2  # Returns result if successful
+            return result2[0]  # Returns result if successful
         except:
             return False  # Returns False if getting failed
         finally:
