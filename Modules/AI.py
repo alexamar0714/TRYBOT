@@ -2,7 +2,8 @@
 from Fint import Fint
 import re
 
-class AI():
+
+class AI:
 
     dust = None
     ass = None
