@@ -4,6 +4,9 @@ import re
 
 class AI():
 
+    dust = None
+    ass = None
+
     has_data = False
     has_unsent_data = False
     posts = []
@@ -11,11 +14,17 @@ class AI():
 
     def __init__(self):
         s = open("stop_words.txt", "r")
-        self.stopp_words = s.read().split("\n")
+        self.stop_words = s.read().split("\n")
         self.marks = [".", "?", "-", ",", "(", ")", "//", "///", "\\", ":", ";", "'", "=", "!", "#", "\xa0"]
         self.html_words = ["<p>", "</p>", "\n", "<br />", "<em>", "</em>", "</strong>", "<strong>", "&nbsp;"]
         self.fint = Fint()
         self.fint.setup_connection("", "", "iwvz8xg2t4o4c7")
+
+    def set_dust(self, dust):
+        self.dust = dust
+
+    def set_ass(self, ass):
+        self.ass = ass
 
     def run(self, fetch_new_data = False):
         if self.has_unsent_data:
@@ -25,16 +34,18 @@ class AI():
             self.analyse()
             return True
         if fetch_new_data:
-            self.fetch_piazza()
-            return True
-        else: return False
+            if self.fetch_piazza():
+                return True # string? to know that main should keep asking?
+        return False
 
     def send_data(self):
-        if self.unsent_data:
-            ###send to the fucker
-            pass
-        else:
-            self.has_unsent_data = False
+        temp_data = self.unsent_data.pop()
+        if self.ass.set_data(temp_data):
+            if self.dust.set_data(temp_data):
+                if not self.unsent_data:
+                    self.has_unsent_data = False
+                    return
+        self.unsent_data.append(temp_data)
 
     def analyse(self):
         for posts in self.posts:
@@ -46,7 +57,7 @@ class AI():
             for marks in self.marks:
                 y = y.replace(marks, " ")
             piazza_post_arr = y.lower().split(" ")
-            final_y = [x.strip() for x in piazza_post_arr if x not in self.stopp_words
+            final_y = [x.strip() for x in piazza_post_arr if x not in self.stop_words
                        and not x.isdigit()]
             y_temp = set(final_y)
             keyword_count = len(y_temp)
@@ -60,14 +71,15 @@ class AI():
         for x in self.unsent_data:
             print(x)
 
-
     def fetch_piazza(self):
-        #fetch highest ID from piazza
-        pizza_id = 0
-        self.posts = self.fint.update(start_cid = pizza_id)
-        self.has_data = True
-
-
+        start_id = self.ass.get_highest_id()
+        if start_id:
+            self.posts = []
+            self.posts = self.fint.update(start_cid = start_id)
+            if self.posts:
+                self.has_data = True
+                return True
+        return False
 
 
 if __name__ == "__main__":

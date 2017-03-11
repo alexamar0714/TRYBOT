@@ -11,8 +11,9 @@ class Dust:
     '''
 
     has_data = False
-    data1 = None
-    data2 = None
+    has_unsent_data = False
+    unsent_data = None
+    data = None  # index 0 = piazzaID, index 1 = Keywords
     Mint = None
 
     def set_mint(self, mint):
@@ -25,19 +26,40 @@ class Dust:
         '''
         The main function of this module. If the module holds any data, it inserts it into the database.
         '''
+        if self.has_unsent_data:
+            val = self.process_data()
+            if val == len(self.data[1]):
+                self.has_unsent_data = False
+                self.has_data = False
+                return True
+            return False
+
         if self.has_data:
-            self.Mint.add_information(str(self.data1), str(self.data1))
-            for word, priority in self.data2.items:
-                self.Mint.add_keyword(word, priority, str(self.data1))
+            val = self.process_data()
+            if val == len(self.data[1]):
+                self.has_data = False
+                return True
+            self.has_unsent_data = True
+            self.unsent_data = self.data
+            return False
+
+    def process_data(self):
+        successful = 0
+        for word, priority in self.data[1].items:
+            if self.Mint.add_keyword(word, priority, str(self.data[0])):
+                successful += 1
+                continue
+            break
+        return successful
 
     def set_data(self, data):
         '''
         :param data: The data to be put into the database. Comes from the AI-module.
         Sets the parameter data if the module holds no data
         '''
-        if not self.has_data:
-            self.data1 = data[0]
-            self.data2 = data[1]
+        if not self.has_data and not self.has_unsent_data:
+            self.data = data
+            self.has_data = True
             return True
         else:
             return False

@@ -2,7 +2,6 @@ class Ass:
 
     '''
     Module for fetching/retrieving an appropriate solution to a question posted on Piazza.
-
     :type has_data: Boolean
     Tells if there is any data to be processed
     :type data: String

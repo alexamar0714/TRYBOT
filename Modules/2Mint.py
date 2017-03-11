@@ -1,0 +1,94 @@
+import pymysql.cursors
+import pymysql
+
+
+class Mint:
+
+    threshold = 75
+
+    def connect(self, host='localhost', user='root', password='root', db='trybot'):
+        '''
+        Connects to the desired database
+        :type host: str
+        :param host: Host name/IP-address
+        :type user: str
+        :param user: User used to connect to the database
+        :type password: str
+        :param password: Users password
+        :type db: str
+        :param db: The database to connect to
+        :return: Connection
+        '''
+
+        try:
+            # The connection
+            connection = pymysql.connect(host=host, user=user, password=password, db=db, charset='utf8')
+            return connection  # Returns the connection if successful
+        except:
+            return False  # Returns False if connection failed
+
+    def add_keyword(self, word=str, priority=str, piazzaid=str):
+        '''
+        Adds a keyword to the keyword table in the database
+        :type word: str
+        :param word: The keyword to add
+        :type priority: str
+        :param priority: The keyword's priority
+        :type piazzaid: str
+        :param piazzaid: The keyword's foreign key to the information table
+        '''
+        connection = self.connect()  # Sets up a connection to the database
+        cursor = connection.cursor()
+        try:
+            sql = "INSERT INTO keywords (word, priority, piazzaid) VALUES (%s, %s, %s)"  # Query
+            cursor.execute(sql, (word, priority, piazzaid))  # Executes the query
+            connection.commit()  # Commits the execution
+            return True  # Returns True if adding successful
+        except:
+            return False  # Returns False if adding failed
+        finally:
+            connection.close()  # Closes the connection to the database
+
+    def get_highest_pri(self, soke_liste):
+        '''
+        Gets the piazzaIDs and sum of priority matching the words given in the array as input to the function
+        :type soke_liste: str array
+        :param soke_liste: eks ["sokeord1","sokeord2","sokeord3"]
+        :return: List of tuples matching the input with desc sumpri, ((sumpri1,piazzaid1),(sumpri2,piazzaid2)): ((7,5738),(5,3245),(3,6578))
+        '''
+
+        connection = self.connect()
+        cursor = connection.cursor()
+        try:
+            soke_string = ""  # Makes an empty string to put in the sql statement
+            for word in soke_liste:  # Builds the string to filter out words in the sql statement based on the input array
+                soke_string += "word = '" + word + "' OR "
+            soke_string = soke_string[:-3]  # Removes the last OR
+            # Joins the two tables, sum the prioreties, groups by the informationid and filters out the words.
+            sql = "SELECT piazzaid, CAST(SUM(priority)/COUNT(piazzaid) AS UNSIGNED) AS ratio FROM keywords WHERE " + soke_string + " AND ratio >= " + str(self.threshold) + " GROUP BY piazzaid ORDER BY ratio DESC"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            piazzaids = "("
+            for pair in result:
+                piazzaids += pair[0] + ","
+            piazzaids = piazzaids[:-1] + ")"
+            sql2 = "SELECT piazzaid, COUNT(piazzaid) AS idcounts FROM keywords WHERE piazzaid IN " + piazzaids + " GROUP BY piazzaid ORDER BY idcounts DESC LIMIT 1"
+            cursor.execute(sql2)
+            result2 = cursor.fetchall()
+            return result2[0]  # Returns result if successful
+        except:
+            return False  # Returns False if getting failed
+        finally:
+            connection.close()
+
+    def get_highest_id(self):
+        connection = self.connect()
+        cursor = connection.cursor()
+        try:
+            sql = "SELECT MAX(piazzaid) FROM keywords"
+            cursor.execute(sql)
+            return cursor.fetchall()
+        except:
+            return False
+        finally:
+            connection.close()
