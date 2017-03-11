@@ -1,5 +1,3 @@
-
-from Fint import Fint
 import re
 
 
@@ -7,7 +5,7 @@ class AI:
 
     dust = None
     ass = None
-
+    fint = None
     has_data = False
     has_unsent_data = False
     posts = []
@@ -18,8 +16,9 @@ class AI:
         self.stop_words = s.read().split("\n")
         self.marks = [".", "?", "-", ",", "(", ")", "//", "///", "\\", ":", ";", "'", "=", "!", "#", "\xa0"]
         self.html_words = ["<p>", "</p>", "\n", "<br />", "<em>", "</em>", "</strong>", "<strong>", "&nbsp;"]
-        self.fint = Fint()
-        self.fint.setup_connection("", "", "iwvz8xg2t4o4c7")
+
+    def set_fint(self, fint):
+        self.fint = fint
 
     def set_dust(self, dust):
         self.dust = dust
@@ -72,11 +71,11 @@ class AI:
         for x in self.unsent_data:
             print(x)
 
-    def fetch_piazza(self):
+    def fetch_piazza(self, test):
         start_id = self.ass.get_highest_id()
         if start_id:
             self.posts = []
-            self.posts = self.fint.update(start_cid = start_id)
+            self.posts = self.fint.update(cid = int(test))
             if self.posts:
                 self.has_data = True
                 return True

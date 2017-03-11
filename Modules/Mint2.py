@@ -5,8 +5,18 @@ import pymysql
 class Mint:
 
     threshold = 75
+    host = ""
+    user = ""
+    pw = ""
+    db = ""
 
-    def connect(self, host='localhost', user='root', password='root', db='trybot'):
+    def set_connection(self, host, user, pw, db):
+        self.host = host
+        self.user = user
+        self.pw = pw
+        self.db = db
+
+    def connect(self, host, user, password, db):
         '''
         Connects to the desired database
         :type host: str
@@ -37,7 +47,7 @@ class Mint:
         :type piazzaid: str
         :param piazzaid: The keyword's foreign key to the information table
         '''
-        connection = self.connect()  # Sets up a connection to the database
+        connection = self.connect(self.host, self.user, self.pw, self.db)  # Sets up a connection to the database
         cursor = connection.cursor()
         try:
             sql = "INSERT INTO keywords (word, priority, piazzaid) VALUES (%s, %s, %s)"  # Query
@@ -57,7 +67,7 @@ class Mint:
         :return: List of tuples matching the input with desc sumpri, ((sumpri1,piazzaid1),(sumpri2,piazzaid2)): ((7,5738),(5,3245),(3,6578))
         '''
 
-        connection = self.connect()
+        connection = self.connect(self.host, self.user, self.pw, self.db)
         cursor = connection.cursor()
         try:
             soke_string = ""  # Makes an empty string to put in the sql statement
@@ -82,7 +92,7 @@ class Mint:
             connection.close()
 
     def get_highest_id(self):
-        connection = self.connect()
+        connection = self.connect(self.host, self.user, self.pw, self.db)
         cursor = connection.cursor()
         try:
             sql = "SELECT MAX(piazzaid) FROM keywords"

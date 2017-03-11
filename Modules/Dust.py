@@ -45,7 +45,7 @@ class Dust:
 
     def process_data(self):
         successful = 0
-        for word, priority in self.data[1].items:
+        for word, priority in self.data[1].items():
             if self.Mint.add_keyword(word, priority, str(self.data[0])):
                 successful += 1
                 continue
