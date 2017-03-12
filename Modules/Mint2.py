@@ -4,7 +4,7 @@ import pymysql
 
 class Mint:
 
-    threshold = 75
+    threshold = 80
     host = ""
     user = ""
     pw = ""
@@ -47,17 +47,20 @@ class Mint:
         :type piazzaid: str
         :param piazzaid: The keyword's foreign key to the information table
         '''
-        connection = self.connect(self.host, self.user, self.pw, self.db)  # Sets up a connection to the database
-        cursor = connection.cursor()
         try:
-            sql = "INSERT INTO keywords (word, priority, piazzaid) VALUES (%s, %s, %s)"  # Query
-            cursor.execute(sql, (word, priority, piazzaid))  # Executes the query
+            connection = self.connect(self.host, self.user, self.pw, self.db)  # Sets up a connection to the database
+            cursor = connection.cursor()
+            sql = "INSERT INTO KEYWORDS(WORD, PRIORITY, PIAZZAID) " \
+                    "SELECT %s, %s, %s " \
+                    "where not exists(select * from keywords " \
+                    "where word = %s and piazzaid = %s)"  # Query
+            cursor.execute(sql, (word, priority, piazzaid, word, piazzaid))  # Executes the query
             connection.commit()  # Commits the execution
-            return True  # Returns True if adding successful
+            return True
         except:
-            return False  # Returns False if adding failed
+            return False
         finally:
-            connection.close()  # Closes the connection to the database
+            connection.close()
 
     def get_highest_pri(self, soke_liste):
         '''
@@ -75,21 +78,20 @@ class Mint:
                 soke_string += "word = '" + word + "' OR "
             soke_string = soke_string[:-3]  # Removes the last OR
             # Joins the two tables, sum the prioreties, groups by the informationid and filters out the words.
-            sql = "SELECT piazzaid, CAST(SUM(priority)/COUNT(piazzaid) AS UNSIGNED) AS ratio FROM keywords WHERE " + soke_string + " AND ratio >= " + str(self.threshold) + " GROUP BY piazzaid ORDER BY ratio DESC"
-            cursor.execute(sql)
+            sql = "SELECT PIAZZAID FROM (SELECT PIAZZAID, SUM(PRIORITY) AS SUMMER FROM KEYWORDS" \
+                    " WHERE " + soke_string + " GROUP BY PIAZZAID) AS TEMP" \
+                    " JOIN (SELECT PIAZZAID AS PIAZZAID2, COUNT(PIAZZAID) AS COUNTER FROM KEYWORDS" \
+                    " GROUP BY PIAZZAID) AS TEMP2" \
+                    " ON PIAZZAID = PIAZZAID2" \
+                    " WHERE SUMMER > %s ORDER BY COUNTER DESC LIMIT 1"
+            cursor.execute(sql, (self.threshold))
             result = cursor.fetchall()
-            piazzaids = "("
-            for pair in result:
-                piazzaids += pair[0] + ","
-            piazzaids = piazzaids[:-1] + ")"
-            sql2 = "SELECT piazzaid, COUNT(piazzaid) AS idcounts FROM keywords WHERE piazzaid IN " + piazzaids + " GROUP BY piazzaid ORDER BY idcounts DESC LIMIT 1"
-            cursor.execute(sql2)
-            result2 = cursor.fetchall()
-            return result2[0]  # Returns result if successful
+            return result[0]  # Returns result if successful
         except:
-            return False  # Returns False if getting failed
+            return False
         finally:
             connection.close()
+
 
     def get_highest_id(self):
         connection = self.connect(self.host, self.user, self.pw, self.db)

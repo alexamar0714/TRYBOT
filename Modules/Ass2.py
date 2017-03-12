@@ -42,9 +42,12 @@ class Ass:
         if self.has_data:
             temp = self.Mint.get_highest_pri(self.data[1])
             if temp:
-                if not self.PMS.set_data(self.data[0], temp):
+                if temp[0] == int(self.data[0]):
+                    self.has_data = False
+                    return
+                if not self.PMS.set_data(self.data[0], temp[0]):
                     self.has_unsent_data = True
-                    self.unsent_data = [self.data[0], temp]
+                    self.unsent_data = [self.data[0], temp[0]]
                 self.has_data = False
 
     def set_data(self, data):

@@ -4,18 +4,21 @@ class PMS:
     data = None
     has_data = False
     fint = None
-    has_unsent_data = True
+    has_unsent_data = False
 
     def set_fint(self, fint):
         self.fint = fint
 
     def set_data(self, current_post, answer_post):
         if not self.has_unsent_data and not self.has_data:
-            if self.current_post != current_post:
+            if self.current_post == current_post:
+                self.has_data = False
+                self.has_unsent_data = False
+            else:
                 self.data = answer_post
                 self.current_post = current_post
                 self.has_data = True
-                return True
+            return True
         return False
 
     def run(self):

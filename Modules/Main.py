@@ -43,13 +43,23 @@ class Main:
             self.ass.run()
             self.dust.run()
             self.pms.run()
-            print("done")
-            x = input("click enter\n")
+            print("AI data " + str(self.ai.has_data))
+            print("AI uData " + str(self.ai.has_unsent_data))
+            print("Ass data " + str(self.ass.has_data))
+            print("Ass udata " + str(self.ass.has_unsent_data))
+            print("dust data " + str(self.dust.has_data))
+            print("dust udata " + str(self.dust.has_unsent_data))
+            print("pms data " + str(self.pms.has_data))
+            print("pms udata " + str(self.pms.has_unsent_data))
+            x = input("click enter\n\n")
             if x == "exit":
                 break
             if x[0:5] == "fetch":
                 self.fint.setup_connection(self.user, self.password, self.class_code)
                 self.ai.fetch_piazza(x[5:])
+            if x[0:5] == "allup":
+                self.fint.setup_connection(self.user, self.password, self.class_code)
+                self.ai.fetch_piazza()
 
 
 if __name__ == "__main__":

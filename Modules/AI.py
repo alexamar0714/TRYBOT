@@ -42,6 +42,7 @@ class AI:
         temp_data = self.unsent_data.pop()
         if self.ass.set_data(temp_data):
             if self.dust.set_data(temp_data):
+                #print("ai sent data succ")
                 if not self.unsent_data:
                     self.has_unsent_data = False
                     return
@@ -68,21 +69,18 @@ class AI:
             self.unsent_data.append([posts[0], key_prio])
         self.has_unsent_data = True
         self.has_data = False
-        for x in self.unsent_data:
-            print(x)
+        print(self.unsent_data)
 
-    def fetch_piazza(self, test):
+    def fetch_piazza(self, test = False):
         start_id = self.ass.get_highest_id()
         if start_id:
             self.posts = []
-            self.posts = self.fint.update(cid = int(test))
+            if test:
+                self.posts = self.fint.update(cid = int(test))
+            else:
+                self.posts = self.fint.update(start_cid = start_id)
+                print(self.posts)
             if self.posts:
                 self.has_data = True
                 return True
         return False
-
-
-if __name__ == "__main__":
-    ai = AI()
-    ai.fetch_piazza()
-    ai.analyse()
