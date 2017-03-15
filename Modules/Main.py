@@ -17,7 +17,7 @@ class Main:
     pms = None
     user = "alexamar@stud.ntnu.no"
     password = "Duongshit"
-    class_code = "iy9ue7czifo1kk"
+    class_code = "ij1ihix6j2o2p9"
     fint_update_val = 10000000
 
     def __init__(self):
@@ -38,6 +38,7 @@ class Main:
         self.fint.setup_connection(self.user, self.password, self.class_code)
 
     def run(self):
+        t = time.time()
         while True:
             self.ai.run()
             self.ass.run()
@@ -51,7 +52,7 @@ class Main:
             print("dust udata " + str(self.dust.has_unsent_data))
             print("pms data " + str(self.pms.has_data))
             print("pms udata " + str(self.pms.has_unsent_data))
-            x = input("click enter\n\n")
+            x = input("click enter")
             if x == "exit":
                 break
             if x[0:5] == "fetch":
@@ -60,7 +61,25 @@ class Main:
             if x[0:5] == "allup":
                 self.fint.setup_connection(self.user, self.password, self.class_code)
                 self.ai.fetch_piazza()
-
+                while True:
+                    self.ai.run()
+                    self.ass.run()
+                    self.dust.run()
+                    self.pms.run()
+                    print("AI data " + str(self.ai.has_data))
+                    print("AI uData " + str(self.ai.has_unsent_data))
+                    print("Ass data " + str(self.ass.has_data))
+                    print("Ass udata " + str(self.ass.has_unsent_data))
+                    print("dust data " + str(self.dust.has_data))
+                    print("dust udata " + str(self.dust.has_unsent_data))
+                    print("pms data " + str(self.pms.has_data))
+                    print("pms udata " + str(self.pms.has_unsent_data))
+                    print("\n\nCONNECTION TEST ")
+                    print(self.mint.get_highest_id())
+                    print("\n\n")
+        t2 = time.time() - t
+        m, s = divmod(t2, 60)
+        print("%d : %d" %(m, s))
 
 if __name__ == "__main__":
     main = Main()

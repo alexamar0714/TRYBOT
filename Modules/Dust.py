@@ -36,11 +36,14 @@ class Dust:
 
         if self.has_data:
             val = self.process_data()
+            #print("this is values : " + str(val))
+            #print("this is length : " + str(len(self.data[1])))
             if val == len(self.data[1]):
                 self.has_data = False
                 return True
             self.has_unsent_data = True
             self.unsent_data = self.data
+            self.has_data = False
             return False
 
     def process_data(self):

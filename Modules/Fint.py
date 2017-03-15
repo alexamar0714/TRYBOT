@@ -48,22 +48,26 @@ class Fint():
         :type: start_cid: int
         :param: start_cid: Update all posts with ID higher than start_cid
         """
-
         try:
-            if cid: #if only one post is to be returned
-                post = self._network.get_post(cid) #gets specified post from Piazza
-                return [(post["nr"], post["history"][0]["content"])] #returns post number and content
+            if not isinstance(start_cid, str):
+                start_cid = "0"
+            if cid:  # if only one post is to be returned
+                post = self._network.get_post(cid)  # gets specified post from Piazza
+                return [(post["nr"], post["history"][0]["content"])]  # returns post number and content
 
             else:
-                temp_arr = [] #temporary array that holds all the posts
-                for x in self._network.iter_all_posts(): #loops through all posts
-
-                    if x["nr"] > start_cid:
+                temp_arr = []  # temporary array that holds all the posts
+                for x in self._network.iter_all_posts(limit= None):  # loops through all posts
+                    print(x["nr"])
+                    if int(x["nr"]) > int(start_cid):
                         temp_arr.append((x["nr"], x["history"][0]["content"]))
-
+                        print("appended")
+                        continue
+                    break
                 return temp_arr
         except:
             return False
+
 
 
 

@@ -30,12 +30,10 @@ class Mint:
         :return: Connection
         '''
 
-        try:
             # The connection
-            connection = pymysql.connect(host=host, user=user, password=password, db=db, charset='utf8')
-            return connection  # Returns the connection if successful
-        except:
-            return False  # Returns False if connection failed
+        connection = pymysql.connect(host=host, user=user, password=password, db=db, charset='utf8')
+        return connection  # Returns the connection if successful
+
 
     def add_keyword(self, word=str, priority=str, piazzaid=str):
         '''
@@ -51,11 +49,12 @@ class Mint:
             connection = self.connect(self.host, self.user, self.pw, self.db)  # Sets up a connection to the database
             cursor = connection.cursor()
             sql = "INSERT INTO KEYWORDS(WORD, PRIORITY, PIAZZAID) " \
-                    "SELECT %s, %s, %s " \
-                    "where not exists(select * from keywords " \
-                    "where word = %s and piazzaid = %s)"  # Query
+                  "SELECT %s, %s, %s " \
+                  "where not exists(select * from keywords " \
+                  "where word = %s and piazzaid = %s)"  # Query
             cursor.execute(sql, (word, priority, piazzaid, word, piazzaid))  # Executes the query
             connection.commit()  # Commits the execution
+            connection.close()
             return True
         except:
             return False
@@ -69,28 +68,37 @@ class Mint:
         :param soke_liste: eks ["sokeord1","sokeord2","sokeord3"]
         :return: List of tuples matching the input with desc sumpri, ((sumpri1,piazzaid1),(sumpri2,piazzaid2)): ((7,5738),(5,3245),(3,6578))
         '''
-
-        connection = self.connect(self.host, self.user, self.pw, self.db)
-        cursor = connection.cursor()
         try:
+            connection = self.connect(self.host, self.user, self.pw, self.db)
+            cursor = connection.cursor()
+
             soke_string = ""  # Makes an empty string to put in the sql statement
             for word in soke_liste:  # Builds the string to filter out words in the sql statement based on the input array
                 soke_string += "word = '" + word + "' OR "
+            print("error 1")
             soke_string = soke_string[:-3]  # Removes the last OR
+            if len(soke_string) <= 10:
+                print("error 2")
+                soke_string = "word = 'putain'"
             # Joins the two tables, sum the prioreties, groups by the informationid and filters out the words.
             sql = "SELECT PIAZZAID FROM (SELECT PIAZZAID, SUM(PRIORITY) AS SUMMER FROM KEYWORDS" \
-                    " WHERE " + soke_string + " GROUP BY PIAZZAID) AS TEMP" \
-                    " JOIN (SELECT PIAZZAID AS PIAZZAID2, COUNT(PIAZZAID) AS COUNTER FROM KEYWORDS" \
-                    " GROUP BY PIAZZAID) AS TEMP2" \
-                    " ON PIAZZAID = PIAZZAID2" \
-                    " WHERE SUMMER > %s ORDER BY COUNTER DESC LIMIT 1"
+                  " WHERE " + soke_string + " GROUP BY PIAZZAID) AS TEMP" \
+                                            " JOIN (SELECT PIAZZAID AS PIAZZAID2, COUNT(PIAZZAID) AS COUNTER FROM KEYWORDS" \
+                                            " GROUP BY PIAZZAID) AS TEMP2" \
+                                            " ON PIAZZAID = PIAZZAID2" \
+                                            " WHERE SUMMER > %s ORDER BY COUNTER DESC LIMIT 1"
             cursor.execute(sql, (self.threshold))
             result = cursor.fetchall()
-            return result[0]  # Returns result if successful
+            if len(result) != 0:
+                return result[0]
+            # none found
+            return "empty"
         except:
             return False
         finally:
             connection.close()
+
+
 
 
     def get_highest_id(self):

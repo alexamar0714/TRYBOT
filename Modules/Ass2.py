@@ -40,7 +40,10 @@ class Ass:
                 self.has_unsent_data = False
             return
         if self.has_data:
+            print("this is post number check it: " + str(self.data[0]))
             temp = self.Mint.get_highest_pri(self.data[1])
+            if temp == "empty":
+                temp = [self.data[0], "tudulu"]
             if temp:
                 if temp[0] == int(self.data[0]):
                     self.has_data = False
