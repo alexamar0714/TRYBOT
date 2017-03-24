@@ -54,7 +54,6 @@ class Mint:
                   "where word = %s and piazzaid = %s)"  # Query
             cursor.execute(sql, (word, priority, piazzaid, word, piazzaid))  # Executes the query
             connection.commit()  # Commits the execution
-            connection.close()
             return True
         except:
             return False

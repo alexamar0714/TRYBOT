@@ -17,7 +17,7 @@ class Main:
     pms = None
     user = "alexamar@stud.ntnu.no"
     password = "Duongshit"
-    class_code = "ij1ihix6j2o2p9"
+    class_code = "iy9ue7czifo1kk"
     fint_update_val = 10000000
 
     def __init__(self):
@@ -52,7 +52,7 @@ class Main:
             print("dust udata " + str(self.dust.has_unsent_data))
             print("pms data " + str(self.pms.has_data))
             print("pms udata " + str(self.pms.has_unsent_data))
-            x = input("click enter")
+            x = input("click enter\n")
             if x == "exit":
                 break
             if x[0:5] == "fetch":
