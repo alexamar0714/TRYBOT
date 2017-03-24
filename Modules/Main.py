@@ -74,8 +74,8 @@ class Main:
                     print("dust udata " + str(self.dust.has_unsent_data))
                     print("pms data " + str(self.pms.has_data))
                     print("pms udata " + str(self.pms.has_unsent_data))
-                    print("\n\nCONNECTION TEST ")
-                    print(self.mint.get_highest_id())
+                    #print("\n\nCONNECTION TEST ")
+                    #print(self.mint.get_highest_id())
                     print("\n\n")
         t2 = time.time() - t
         m, s = divmod(t2, 60)
