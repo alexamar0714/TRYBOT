@@ -100,3 +100,7 @@ class AI:
                 self.has_data = True
                 return True
         return False
+
+    def loop(self):
+        if not self.unsent_data:
+            return True

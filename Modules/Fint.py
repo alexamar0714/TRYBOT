@@ -92,10 +92,11 @@ class Fint():
 
 
         try:
-            #self._network.create_followup(self._network.get_post(cid), content, True)
+            self._network.create_followup(self._network.get_post(cid), content, False)
             print("posted " + content)
             return True
         except:
             return False
+
 
 

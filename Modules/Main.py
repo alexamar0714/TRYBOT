@@ -61,7 +61,8 @@ class Main:
             if x[0:5] == "allup":
                 self.fint.setup_connection(self.user, self.password, self.class_code)
                 self.ai.fetch_piazza()
-                while True:
+                loop = True
+                while loop:
                     self.ai.run()
                     self.ass.run()
                     self.dust.run()
@@ -77,6 +78,8 @@ class Main:
                     #print("\n\nCONNECTION TEST ")
                     #print(self.mint.get_highest_id())
                     print("\n\n")
+                    if self.ai.loop():
+                        loop = False
         t2 = time.time() - t
         m, s = divmod(t2, 60)
         print("%d : %d" %(m, s))

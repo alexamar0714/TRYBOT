@@ -74,10 +74,10 @@ class Mint:
             soke_string = ""  # Makes an empty string to put in the sql statement
             for word in soke_liste:  # Builds the string to filter out words in the sql statement based on the input array
                 soke_string += "word = '" + word + "' OR "
-            print("error 1")
+            #print("error 1")
             soke_string = soke_string[:-3]  # Removes the last OR
             if len(soke_string) <= 10:
-                print("error 2")
+                #print("error 2")
                 soke_string = "word = 'putain'"
             # Joins the two tables, sum the prioreties, groups by the informationid and filters out the words.
             sql = "SELECT PIAZZAID FROM (SELECT PIAZZAID, SUM(PRIORITY) AS SUMMER FROM KEYWORDS" \
