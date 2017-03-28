@@ -1,6 +1,8 @@
-
+# Build ouput
 build/
 
+# IntelliJ files
 .idea/
 
-__pycache__/
+#executeable py
+*.pyc
