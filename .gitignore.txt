@@ -1,8 +1,0 @@
-# Build ouput
-build/
-
-# IntelliJ files
-.idea/
-
-#executeable py
-*.pyc
