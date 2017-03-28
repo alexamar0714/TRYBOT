@@ -51,7 +51,7 @@ class AI:
 
         """
         :type fint: Fint()-object
-            :param fint:  read method name
+            :param fint:  Uses this Interface to fetch content from Piazza
         """
 
         self.fint = fint
@@ -60,7 +60,7 @@ class AI:
 
         """
         :type dust: Dust()-object
-            :param dust: read method name
+            :param dust: Sends data to this module
         """
 
         self.dust = dust
@@ -69,7 +69,7 @@ class AI:
 
         """
         :type ass: Ass()-object
-            :param ass:  read method name
+            :param ass:  Sends data to this module
         """
 
         self.ass = ass
@@ -150,8 +150,8 @@ class AI:
         :type test: Str/Int
             :param test: used for fetching a precise post, mostly used for testing
         """
-
-        start_id = self.ass.get_highest_id() # if output ((51,))  else nothing i.e. tuple inside tuple, num = int
+        start_id = 0
+        #start_id = self.ass.get_highest_id() # if output ((51,))  else nothing i.e. tuple inside tuple, num = int
         if not start_id:
             start_id = ((0, "tudulu"),) # if none/null StartId set to 0
         self.posts = []
@@ -170,6 +170,7 @@ class AI:
         This method is used by main to determine if main should stop the main loop
         checks if self.unsent_data is empty (stack) if yes, return True else None
         """
-
+        print("AI Stack: ", len(self.unsent_data))
         if not self.unsent_data:
-            return True
+            return 0
+        return len(self.unsent_data)
