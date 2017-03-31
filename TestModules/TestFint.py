@@ -28,9 +28,8 @@ class TestFint(unittest.TestCase):
         self.assertFalse(fint.update(cid=1000))
         self.assertTrue(fint.update(cid=1))
         self.assertFalse(fint.update(cid="lol"))
-        self.assertFalse(fint.update(start_cid="lol"))
         self.assertFalse(fint.update(start_cid=1000))
-        self.assertTrue(fint.update(10))
+        self.assertTrue(fint.update(55))
 
     def test_answer(self):
         fint = Fint()
