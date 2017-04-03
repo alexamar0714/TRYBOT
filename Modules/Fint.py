@@ -4,7 +4,6 @@ The purpose of this module is to serve as an interface between the Bot and the F
 """
 
 import piazza_api
-import sys
 
 
 class Fint:
@@ -13,7 +12,6 @@ class Fint:
         """
         Creates a Piazza_api.Piazza to be used by the other functions
         """
-        sys.path.append("../")
         self._piazza = piazza_api.Piazza()
 
     def setup_connection(self, email, password, class_code):
@@ -39,7 +37,7 @@ class Fint:
             return False # returns false if unsuccessful
 
 
-    def update(self, start_cid="0", cid=None):
+    def update(self, start_cid=0, cid=None):
 
         """
         Goes through the Piazza posts, and if cid is declared, goes through only the specified post
@@ -50,8 +48,11 @@ class Fint:
             :param: start_cid: Update all posts with ID higher than start_cid
         """
         try:
-            if not isinstance(start_cid, str):
-                start_cid = "0"
+            if not isinstance(start_cid, int):
+                try:
+                    start_cid = int(start_cid)
+                except:
+                    start_cid = 0
             if cid:  # if only one post is to be returned
                 post = self._network.get_post(cid)  # gets specified post from Piazza
                 return [(post["nr"], post["history"][0]["content"])]  # returns post number and content
@@ -59,7 +60,7 @@ class Fint:
             else:
                 temp_arr = []  # temporary array that holds all the posts
                 for x in self._network.iter_all_posts(limit= None):  # loops through all posts
-                    if int(x["nr"]) > int(start_cid):
+                    if int(x["nr"]) > start_cid:
                         temp_arr.append((x["nr"], x["history"][0]["content"]))
                         print("appended ", x["nr"])
                         continue

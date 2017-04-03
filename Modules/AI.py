@@ -41,6 +41,7 @@ class AI:
 
         s = open("stop_words.txt", "r")
         self.stop_words = s.read().split("\n")
+        s.close()
         self.marks = [".", "?", "-", ",", "(", ")", "//", "///", "\\", ":", ";", "'", "=", "!", "#", "\xa0",
                       "%", "&", "$", "@", "ø", "æ", "å", "_", '"', "*"]
         self.html_words = ["<p>", "</p>", "\n", "<br />", "<em>", "</em>", "</strong>", "<strong>", "&nbsp;",
@@ -150,8 +151,8 @@ class AI:
         :type test: Str/Int
             :param test: used for fetching a precise post, mostly used for testing
         """
-        start_id = 0
-        #start_id = self.ass.get_highest_id() # if output ((51,))  else nothing i.e. tuple inside tuple, num = int
+
+        start_id = self.ass.get_highest_id() # if output ((51,))  else nothing i.e. tuple inside tuple, num = int
         if not start_id:
             start_id = ((0, "tudulu"),) # if none/null StartId set to 0
         self.posts = []

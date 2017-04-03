@@ -79,7 +79,7 @@ class Main:
                     #print("\n\nCONNECTION TEST ")
                     #print(self.mint.get_highest_id())
                     print("\n\n")
-                    if self.ai.loop():
+                    if self.ai.loop() == 0:
                         loop = False
         t2 = time.time() - t
         m, s = divmod(t2, 60)

@@ -39,7 +39,6 @@ class Mint:
         connection = pymysql.connect(host=host, user=user, password=password, db=db, charset='utf8')
         return connection
 
-
     def add_keyword(self, word=str, priority=str, piazzaid=str):
 
         """
@@ -64,7 +63,8 @@ class Mint:
             cursor.execute(sql, (word, priority, piazzaid, word, piazzaid))  # Executes the query
             connection.commit()  # Commits the execution
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
         finally:
             connection.close()
@@ -74,8 +74,8 @@ class Mint:
         """
         Fetches the answer with highest count of words + prioirty sum
 
-        :type search_liste: dict
-            :param search_liste: a dictionary containing keywords + priority, only keywords are needed here
+        :type search_list: dict
+            :param search_list: a dictionary containing keywords + priority, only keywords are needed here
         """
 
         try:
