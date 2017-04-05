@@ -106,8 +106,8 @@ class AI:
             if self.dust.set_data(temp_data):  # attempt to set_data on dust module
                 if not self.unsent_data:  # check stack, if empty set has_unsent_data = False
                     self.has_unsent_data = False
-                    return
-                return  # unsent_data is not empty, therefore do nothing with has_unsent_data
+                    return True
+                return False # unsent_data is not empty, therefore do nothing with has_unsent_data
         self.unsent_data.append(temp_data) # failed to set either ass or dust, therefore restack
 
     def analyse(self):
@@ -172,6 +172,4 @@ class AI:
         checks if self.unsent_data is empty (stack) if yes, return True else None
         """
         print("AI Stack: ", len(self.unsent_data))
-        if not self.unsent_data:
-            return 0
         return len(self.unsent_data)

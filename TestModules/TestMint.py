@@ -12,8 +12,8 @@ class TestMint(unittest.TestCase):
     user = "root"
     password = "Admin"
     db = "trybot"
-    keywords = [("a", "10", "1"), ("b", "10", "1"), ("c", "10", "1"),
-                ("a", "9", "2"), ("b", "9", "2"), ("c", "9", "2"), ("d", "9", "2")]
+    keywords = [("a", "10", "11"), ("b", "10", "11"), ("c", "10", "11"),
+                ("a", "9", "12"), ("b", "9", "12"), ("c", "9", "12"), ("d", "9", "12")]
 
     def test_set_connection(self):
         mint = Mint()
@@ -37,8 +37,8 @@ class TestMint(unittest.TestCase):
         mint.threshold = 29
         for x in self.keywords:
             mint.add_keyword(x[0], x[1], x[2])
-        self.assertEqual((1,), mint.get_highest_pri(["a", "b", "c"]))
-        self.assertEqual((2,), mint.get_highest_pri(["a", "b", "c", "d"]))
+        self.assertEqual((11,), mint.get_highest_pri(["a", "b", "c"]))
+        self.assertEqual((12,), mint.get_highest_pri(["a", "b", "c", "d"]))
         self.assertEqual("empty", mint.get_highest_pri([]))
 
 

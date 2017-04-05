@@ -31,6 +31,7 @@ class TestAI(unittest.TestCase):
         self.assertEqual(ass, ai.ass)
 
     def test_loop(self):
+        self.tearDown()
         fint = Fint()
         fint.setup_connection(self.user, self.password, self.class_code)
         ai = AI()
@@ -39,6 +40,7 @@ class TestAI(unittest.TestCase):
         ass.set_mint(Mint())
         ai.set_ass(ass)
         ass.mint.set_connection(host = "localhost", user = "root", pw = "Admin", db = "trybot")
+        ai.unsent_data = []
         self.assertEqual(0, ai.loop())
         ai.fetch_piazza(test = 1)
         ai.run()
@@ -53,12 +55,15 @@ class TestAI(unittest.TestCase):
         ass.set_mint(Mint())
         ai.set_ass(ass)
         ass.mint.set_connection(host="localhost", user="root", pw="Admin", db="trybot")
-        self.assertEqual([], ai.posts)
-        ai.fetch_piazza(test = 1)
-        self.assertNotEqual([], ai.posts)
-        ai.posts = None
+        self.assertEqual(0, ai.loop())
+        self.assertTrue(ai.fetch_piazza(test = 50))
+        ai.run()
+        self.assertNotEqual(0, ai.loop())
+        ai.set_dust(Dust())
+        ai.run()
         ai.fetch_piazza()
-        self.assertNotEqual(None, ai.posts)
+        ai.run()
+        self.assertNotEqual(0, ai.loop())
 
     def test_send_data(self):
         ai = AI()
@@ -68,18 +73,11 @@ class TestAI(unittest.TestCase):
         ai.set_dust(dust)
         ai.unsent_data = []
         ai.unsent_data.append(["1", {"test": 1}])
-        ai.send_data()
-        self.assertEqual([], ai.unsent_data)
+        self.assertTrue(ai.send_data())
+        self.assertEqual(0, ai.loop())
         ai.unsent_data.append(["1", {"test": 1}])
-        ass.has_unsent_data = True
-        ai.send_data()
-        self.assertEqual(["1", {"test": 1}], ai.unsent_data.pop())
-        ass.has_unsent_data = False
-        ai.unsent_data.append(["1", {"test": 1}])
-        dust.has_unsent_data = True
-        ai.send_data()
-        self.assertEqual(["1", {"test": 1}], ai.unsent_data.pop())
-
+        self.assertFalse(ai.send_data())
+        self.assertEqual(1, ai.loop())
 
 
 

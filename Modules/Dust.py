@@ -23,7 +23,7 @@ class Dust:
     has_unsent_data = False
     unsent_data = None
     data = None  # index 0 = piazzaID, index 1 = Keywords
-    Mint = None
+    mint = None
 
     def set_mint(self, mint):
 
@@ -32,7 +32,7 @@ class Dust:
             :param mint: used for communicating with the database
         '''
 
-        self.Mint = mint
+        self.mint = mint
 
     def run(self):
 
@@ -68,7 +68,7 @@ class Dust:
 
         successful = 0
         for word, priority in self.data[1].items():
-            if self.Mint.add_keyword(word, priority, str(self.data[0])):
+            if self.mint.add_keyword(word, priority, str(self.data[0])):
                 successful += 1
                 continue
             break

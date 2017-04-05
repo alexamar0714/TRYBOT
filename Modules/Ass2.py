@@ -61,7 +61,7 @@ class Ass:
             temp = self.mint.get_highest_pri(self.data[1])
             if temp == "empty":  # hardcoded response
                 temp = [self.data[0], "tudulu"]  # tudulu has no meaning, placeholder at most
-            if temp[0] == int(self.data[0]):
+            if temp[0] == int(self.data[0]):  # if answer piazzaid is equal to current piazzaid, then ignore
                 self.has_data = False
                 return
             if not self.pms.set_data(self.data[0], temp[0]):
