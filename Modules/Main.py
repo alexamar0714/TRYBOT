@@ -8,24 +8,24 @@ import time
 
 class Main:
 
+    # --- Modify below ---
+    user = ""  # Piazza user. Ex: "eksempel@stud.ntnu.no" NB: has to be enrolled to the class_code
+    password = ""  # Piazza password. Ex: "MyPassword"
+    # class code, found at the end of its URL Ex: https://piazza.com/class/(HERE IS THE CLASS CODE)
+    class_code = "iy9ue7czifo1kk"  # Ex: "iy9ue7czifo1kk"
+    fint_update_val = 10  # seconds of delay before fetching new data
+    sqlUser = "root"  # name of sql user
+    sqlPass = "Password"  # password of sql user
+    sqlHost = "localhost"  # change this one if you use a different host
+    # -------------------
+
     mint = None
     Fint = None
     ass = None
     ai = None
     dust = None
     pms = None
-
-    # --- Modify below ---
-    user = "alexamar@stud.ntnu.no"  # Piazza user. Ex: "eksempel@stud.ntnu.no"
-    password = "Duongshit"  # Piazza password. Ex: "MyPassword"
-    # class code, found at the end of its URL Ex: https://piazza.com/class/(HERE IS THE CLASS CODE)
-    class_code = "iy9ue7czifo1kk"  # Ex: "iy9ue7czifo1kk"
-    fint_update_val = 10  # seconds of delay before fetching new data
-    sqlUser = "root"  # name of sql user
-    sqlPass = "Admin"  # password of sql user
-    sqlHost = "localhost"  # change this one if you use a different host
-    # -------------------
-
+    
     def __init__(self):
         self.fint = Fint()
         self.mint = Mint()

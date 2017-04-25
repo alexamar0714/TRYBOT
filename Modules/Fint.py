@@ -92,8 +92,8 @@ class Fint:
 
 
         try:
-            #self._network.create_followup(self._network.get_post(cid), content, False)
-            print("bot posted answer " + content)
+            self._network.create_followup(self._network.get_post(cid), content, False)
+            print("bot posted answer:   " + content)
             return True
 
         except Exception as e:
