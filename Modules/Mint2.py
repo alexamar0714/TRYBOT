@@ -1,6 +1,6 @@
 """
 This is the MysqlINTerface for the TRYBOT
-The purpose of this module is to serve as the piazza post analyzer i.e "interpret" the posts content
+The purpose of this module is to interact with the MySQL database
 """
 
 

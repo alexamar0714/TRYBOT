@@ -9,8 +9,9 @@ Setup:
 
     #2 MySQL:
 	
-	1. create a database named "trybot" in localhost
-	2. create a table using the file Modules/trybot_db2.mwb
+	1. create connection on localhost if not already made
+	2. open the file Modules/trybot_db2.mwb
+	3. forward engineer the table to the connection on localhost
 
     #3 trybot:
 	1. open the file Modules/Main.py
