@@ -1,0 +1,34 @@
+Setup:
+
+    #1 Python extensions:
+
+	1) pymysql
+	2) piazza_api
+
+	//use "pip install #######" in cmd
+
+    #2 MySQL:
+
+	1. create a database named "trybot"
+	2. create a table using the file Modules/trybot_db2.mwb
+
+    #3 trybot:
+	1. open the file Modules/Main.py
+	2. change the variables in the comment section "Modify below"
+	
+    #4 OPTIONAL:
+    	Modules/Mint2.py, variable "threshold" is used to decide how much the keywords
+    	have to match before it assumes to have found an answer and post this answer
+
+
+After setup start the program by running Modules/Main.py
+the first run will take some time as it has to update the database with all the existing posts.
+
+// The bot might answer some already existing posts in the first run, if you dont want this
+// open the file Modules/Fint.py and comment out code line 95
+// ie. "self._network.create_followup(self._network.get_post(cid), content, False)"
+// and run the program so that it can update the database first, after it is up to date, remove
+// the commented code line and start the program again
+
+
+ 

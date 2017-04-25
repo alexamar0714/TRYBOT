@@ -29,13 +29,13 @@ class Fint:
         """
 
         try:
-            self._piazza.user_login(email, password) # logs into piazza
-            self._network = self._piazza.network(class_code) # establishes a connection to the specified class
+            self._piazza.user_login(email, password)  # logs into piazza
+            self._network = self._piazza.network(class_code)  # establishes a connection to the specified class
             return True # returns true if successful
 
-        except:
+        except Exception as e:
+            print(e)
             return False # returns false if unsuccessful
-
 
     def update(self, start_cid=0, cid=None):
 
@@ -62,16 +62,15 @@ class Fint:
                 for x in self._network.iter_all_posts(limit= None):  # loops through all posts
                     if int(x["nr"]) > start_cid:
                         temp_arr.append((x["nr"], x["history"][0]["content"]))
-                        print("appended ", x["nr"])
+                        print("appended post number: ", x["nr"])
                         continue
                     break
                 # type: List  param: List contains tuples (str, str), example ("161", "tuduluuuu, this boom")
                 return temp_arr
-        except:
+
+        except Exception as e:
+            print(e)
             return False # error under fetching of posts
-
-
-
 
     def answer(self, cid, content):
 
@@ -84,19 +83,21 @@ class Fint:
             :param: content: content of the followup
         """
 
-        if content == None or isinstance(content, bool):
+        if content is None or isinstance(content, bool):
             return False
 
-        elif isinstance(content, int): #if cid is an int, then produce a link to another post
-            content = "@"+str(content)
+        elif isinstance(content, int):  # if cid is an int, then produce a link to another post
+            content = "Bot answer: @"+str(content)
 
 
 
         try:
             #self._network.create_followup(self._network.get_post(cid), content, False)
-            print("posted " + content)
+            print("bot posted answer " + content)
             return True
-        except:
+
+        except Exception as e:
+            print(e)
             return False
 
 

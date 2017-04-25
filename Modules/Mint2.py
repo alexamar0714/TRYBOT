@@ -12,7 +12,7 @@ class Mint:
 
     """
     :type treshold: int
-        :param Int value determines the lower limit of the sum(priority) of the answers
+        :param determines the lower limit of the sum(priority) of the answers (0 - 100)
     :type host: str
         :param  Host name/ IP
     :type user: str
@@ -23,7 +23,7 @@ class Mint:
         :param name of the database
     """
 
-    threshold = 80
+    threshold = 60
     host = ""
     user = ""
     pw = ""
@@ -101,7 +101,8 @@ class Mint:
                 return result[0]
             # none found, return predefined string
             return "empty"
-        except:
+        except Exception as e:
+            print(e)
             return False
         finally:
             connection.close()
@@ -119,7 +120,8 @@ class Mint:
             sql = "SELECT MAX(piazzaid) FROM keywords"
             cursor.execute(sql)
             return cursor.fetchall()  # if output ((int,))  else nothing i.e. tuple inside tuple
-        except:
+        except Exception as e:
+            print(e)
             return False
         finally:
             connection.close()

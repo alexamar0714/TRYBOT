@@ -14,10 +14,15 @@ class Main:
     ai = None
     dust = None
     pms = None
-    user = "alexamar@stud.ntnu.no"
-    password = "Duongshit"
-    class_code = "iy9ue7czifo1kk"
-    fint_update_val = 600
+
+    # --- Modify below ---
+    user = "alexamar@stud.ntnu.no"  # Ex: "eksempel@stud.ntnu.no"
+    password = "Duongshit"  # Ex: "MyPassword"
+    class_code = "iy9ue7czifo1kk"  # Ex: "iy9ue7czifo1kk"
+    fint_update_val = 10  # seconds of delay in the loop before fetching new data
+    sqlUser = "root"  # name of sql user
+    sqlPass = "Admin"  # password of sql user
+    # -------------------
 
     def __init__(self):
         self.fint = Fint()
@@ -34,14 +39,13 @@ class Main:
         self.dust.set_mint(self.mint)
         self.pms.set_fint(self.fint)
 
-        #add something to get these as input?
-        self.mint.set_connection(host = "localhost", user = "root", pw = "Admin", db = "trybot")
+        self.mint.set_connection(host = "localhost", user = self.sqlUser, pw = self.sqlPass, db = "trybot")
         self.fint.setup_connection(self.user, self.password, self.class_code)
 
     def run(self):
         while True:
+            print("checking for new posts")
             time.sleep(self.fint_update_val)
-            self.fint.setup_connection()
             self.ai.fetch_piazza()
             stuck_count = 0
             current_stack = 0
