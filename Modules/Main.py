@@ -16,12 +16,14 @@ class Main:
     pms = None
 
     # --- Modify below ---
-    user = "alexamar@stud.ntnu.no"  # Ex: "eksempel@stud.ntnu.no"
-    password = "Duongshit"  # Ex: "MyPassword"
+    user = "alexamar@stud.ntnu.no"  # Piazza user. Ex: "eksempel@stud.ntnu.no"
+    password = "Duongshit"  # Piazza password. Ex: "MyPassword"
+    # class code, found at the end of its URL Ex: https://piazza.com/class/(HERE IS THE CLASS CODE)
     class_code = "iy9ue7czifo1kk"  # Ex: "iy9ue7czifo1kk"
-    fint_update_val = 10  # seconds of delay in the loop before fetching new data
+    fint_update_val = 10  # seconds of delay before fetching new data
     sqlUser = "root"  # name of sql user
     sqlPass = "Admin"  # password of sql user
+    sqlHost = "localhost"  # change this one if you use a different host
     # -------------------
 
     def __init__(self):
@@ -39,7 +41,7 @@ class Main:
         self.dust.set_mint(self.mint)
         self.pms.set_fint(self.fint)
 
-        self.mint.set_connection(host = "localhost", user = self.sqlUser, pw = self.sqlPass, db = "trybot")
+        self.mint.set_connection(host = self.sqlHost, user = self.sqlUser, pw = self.sqlPass, db = "trybot")
         self.fint.setup_connection(self.user, self.password, self.class_code)
 
     def run(self):

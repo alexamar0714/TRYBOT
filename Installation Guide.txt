@@ -8,8 +8,8 @@ Setup:
 	//use "pip install #######" in cmd
 
     #2 MySQL:
-
-	1. create a database named "trybot"
+	
+	1. create a database named "trybot" in localhost
 	2. create a table using the file Modules/trybot_db2.mwb
 
     #3 trybot:
@@ -22,8 +22,8 @@ Setup:
 
 
 After setup start the program by running Modules/Main.py
-the first run will take some time as it has to update the database with all the existing posts.
 
+// If used on an existing piazza class:
 // The bot might answer some already existing posts in the first run, if you dont want this
 // open the file Modules/Fint.py and comment out code line 95
 // ie. "self._network.create_followup(self._network.get_post(cid), content, False)"
