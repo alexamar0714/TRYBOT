@@ -12,10 +12,10 @@ class Main:
     user = ""  # Piazza user. Ex: "eksempel@stud.ntnu.no" NB: has to be enrolled to the class_code
     password = ""  # Piazza password. Ex: "MyPassword"
     # class code, found at the end of its URL Ex: https://piazza.com/class/(HERE IS THE CLASS CODE)
-    class_code = "iy9ue7czifo1kk"  # Ex: "iy9ue7czifo1kk"
-    fint_update_val = 10  # seconds of delay before fetching new data
+    class_code = "j1xz2j1j5x429i"  # Ex: "iy9ue7czifo1kk"
+    fint_update_val = 5  # seconds of delay before fetching new data
     sqlUser = "root"  # name of sql user
-    sqlPass = "Password"  # password of sql user
+    sqlPass = "password"  # password of sql user
     sqlHost = "localhost"  # change this one if you use a different host
     # -------------------
 
@@ -25,7 +25,7 @@ class Main:
     ai = None
     dust = None
     pms = None
-    
+
     def __init__(self):
         self.fint = Fint()
         self.mint = Mint()
@@ -47,7 +47,6 @@ class Main:
     def run(self):
         while True:
             print("checking for new posts")
-            time.sleep(self.fint_update_val)
             self.ai.fetch_piazza()
             stuck_count = 0
             current_stack = 0
@@ -74,6 +73,7 @@ class Main:
                     time.sleep(1)
                 if x == 0:
                     break
+            time.sleep(self.fint_update_val)
 
 if __name__ == "__main__":
     main = Main()

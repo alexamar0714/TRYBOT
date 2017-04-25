@@ -64,7 +64,7 @@ class Fint:
                         temp_arr.append((x["nr"], x["history"][0]["content"]))
                         print("appended post number: ", x["nr"])
                         continue
-                    break
+                    #break
                 # type: List  param: List contains tuples (str, str), example ("161", "tuduluuuu, this boom")
                 return temp_arr
 
